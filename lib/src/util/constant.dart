@@ -1,5 +1,26 @@
-enum STUN_ATTRIBUTE_TYPE {
-  reserved,
+const int MAGIC_COOKIE = 0x2112A442;
+
+const int RESERVED = 0x0000;
+const int ATTRIBUTE_MAPPED_ADDRESS  = 0x0000;
+const int ATTRIBUTE_RESPONSE_ADDRESS = 0x0000;
+const int ATTRIBUTE_CHANGE_ADDRESS = 0x0000;
+const int ATTRIBUTE_SOURCE_ADDRESS = 0x0000;
+const int ATTRIBUTE_CHANGED_ADDRESS = 0x0000;
+const int ATTRIBUTE_USERNAME = 0x0000;
+const int ATTRIBUTE_PASSWORD  = 0x0000;
+const int ATTRIBUTE_MESSAGE_INTEGRITY = 0x0000;
+const int ATTRIBUTE_ERROR-CODE = 0x0000;
+const int ATTRIBUTE_UNKNOWN-ATTRIBUTES   = 0x0000;
+const int ATTRIBUTE_REFLECTED-FROM = 0x0000;
+const int ATTRIBUTE_REALM = 0x0000;
+const int ATTRIBUTE_NONCE = 0x0000;
+const int ATTRIBUTE_XOR-MAPPED_ADDRESS   = 0x0000;
+const int ATTRIBUTE_  Comprehension-optional range (0x8000-0xFFFF)      0x8022: SOFTWARE      0x8023: ALTERNATE-SERVER      0x8028: FINGERPRINT
+
+
+
+
+eserved,
   mappedAddress,
   responseAddress,
   changeAddress,
@@ -42,4 +63,3 @@ int getHoot (STUN_ATTRIBUTE_TYPE attrib) {
   }
 }
  
-const int MAGIC_COOKIE = 0x2112A442;
