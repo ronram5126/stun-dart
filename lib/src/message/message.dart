@@ -61,12 +61,17 @@ class Message extends TLVEncoding {
     List<int> superBytes = super.toBytes();
     var result =
         new Uint8List(superBytes.length + 12 + MAGIC_COOKIE_ARRAY.length);
-    result.setAll(0, [
+    var valList = [
       ...superBytes.sublist(0, 4),
       ...MAGIC_COOKIE_ARRAY,
       ...this.transactionId,
-      ...superBytes.sublist(5)
-    ]);
+    ];
+
+    if (superBytes.length > 4) {
+      valList.addAll(superBytes.sublist(5));
+    }
+
+    result.setAll(0, valList);
     return result;
   }
 

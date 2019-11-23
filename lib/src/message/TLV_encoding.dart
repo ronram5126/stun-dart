@@ -43,8 +43,8 @@ class TLVEncoding implements ByteSerializable {
       throw InvalidEncoding(
           "Given Data must include 32-bit (4 byte) information, 16-bit for type and 16-bit for length.");
     }
-    int _type = byteData[0] << 8 + byteData[1] & 0xff;
-    int _length = byteData[2] << 8 + byteData[3] & 0xff;
+    int _type = byteData[0] << 8 | byteData[1] & 0xff;
+    int _length = byteData[2] << 8 | byteData[3] & 0xff;
     List<int> _datas = new List<int>();
 
     if (byteData.length > 4) {

@@ -68,7 +68,7 @@ class MappedAddress implements ByteSerializable {
       throw InvalidEncoding(
           "Data length is not valid. Expected 20 byte or 8 byte data got ${datas.length} bytes");
     }
-    int _port = datas[2] << 8 & datas[3] * 0xff;
+    int _port = datas[2] << 8 | datas[3] * 0xff;
     List<int> _address = datas.sublist(3, datas.length);
     return new MappedAddress(getFamily(datas[1]), _port, _address);
   }

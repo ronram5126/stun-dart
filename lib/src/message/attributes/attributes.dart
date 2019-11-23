@@ -21,19 +21,28 @@ class DefaultAttribute extends ByteSerializable {
 }
 
 class Attribute<T extends ByteSerializable> extends TLVEncoding {
-  final ByteSerilizerFactory<T> attributeGenerator;
+  ByteSerilizerFactory<T> _attributeGenerator;
   int get length => 4 + datas.length;
 
+  T _attribute;
+
   T get attribute {
-    return attributeGenerator(datas);
+    if (_attribute == null) {
+      _attribute = _attributeGenerator(datas);
+    }
+    return _attribute;
   }
 
-  Attribute(this.attributeGenerator, int type, List<int> datas)
-      : super(type, datas);
+  Attribute(int type, List<int> datas) : super(type, datas) {
+    this._attributeGenerator = getSerilizer(type);
+  }
+  factory Attribute.fromAttribute(int type, T attrib) {
+    return Attribute(type, attrib.toBytes());
+  }
 
   factory Attribute.fromBytes(List<int> bytes) {
     var tlv = TLVEncoding.fromBytes(bytes);
-    return new Attribute(getSerilizer(tlv.type), tlv.type, tlv.datas);
+    return new Attribute(tlv.type, tlv.datas);
   }
 }
 
@@ -65,12 +74,7 @@ class Attributes extends ListBase<Attribute<ByteSerializable>>
   }
 
   @override
-  int get length => _typeMap.length;
-
-  @override
-  set length(int newLength) {
-    throw Exception("cannot set length of attributes");
-  }
+  int length;
 
   @override
   Attribute operator [](dynamic index) {
