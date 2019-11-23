@@ -5,10 +5,12 @@ homepage: https://github.com/ronram5126/stun-dart
 description: Simple plug and play stun client for dart, with configurable predefined list of public stun.
 
 environment:
-  sdk: ">=2.4.0"
+  sdk: ">=2.2.2"
 
 dependencies:
   udp: ^2.0.0
+  uuid: ^2.0.4
+  dart_stringprep: ^0.1.0+4-dev
 
 dev_dependencies:
   test: ^1.3.0
