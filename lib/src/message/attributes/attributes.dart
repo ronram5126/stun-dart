@@ -48,55 +48,46 @@ class Attribute<T extends ByteSerializable> extends TLVEncoding {
 
 class Attributes extends ListBase<Attribute<ByteSerializable>>
     implements ByteSerializable {
-  Map<String, Attribute<ByteSerializable>> _typeMap;
+  List<Attribute<ByteSerializable>> attributes;
+
   int get contentLength {
     return this.fold(0, (e, a) => e + a.length + 4);
   }
 
   Attributes() : super() {
-    _typeMap = Map<String, Attribute<ByteSerializable>>();
-  }
-
-  @override
-  void add(Attribute a) {
-    super.add(a);
-    String key = getAttributeString(a.type);
-    _typeMap[key] = a;
+    this.attributes = new List<Attribute<ByteSerializable>>();
   }
 
   void addFromBytes(List<int> bytes) {
     int index = 0;
     while (bytes.length - index >= 4) {
       var attrib = Attribute.fromBytes(bytes.sublist(index));
-      this.add(attrib);
+      attributes.add(attrib);
+      XAddress xaddr = attrib.attribute;
+      var port = xaddr.actualPort;
+      var addr = xaddr.actualAddress;
       index += attrib.length;
     }
   }
 
   @override
-  int length;
-
-  @override
-  Attribute operator [](dynamic index) {
-    if (index is String) {
-      return _typeMap[index];
-    } else if (index is int) {
-      return _typeMap.values.toList()[index];
-    } else {
-      throw Exception("unknown index type");
-    }
+  int get length {
+    return attributes.length;
   }
 
   @override
-  void operator []=(dynamic index, Attribute value) {
-    if (index is String) {
-      _typeMap[index] = value;
-    } else if (index is int) {
-      var inx = _typeMap.keys.toList()[index];
-      _typeMap[inx] = value;
-    } else {
-      throw Exception("unknown index type");
-    }
+  set length(int _length) {
+    attributes.length = _length;
+  }
+
+  @override
+  Attribute operator [](int index) {
+    return attributes[index];
+  }
+
+  @override
+  void operator []=(int index, Attribute value) {
+    attributes[index] = value;
   }
 
   @override

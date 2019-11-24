@@ -64,12 +64,13 @@ class MappedAddress implements ByteSerializable {
   }
 
   factory MappedAddress.fromBytes(List<int> datas) {
-    if (datas.length != 20 || datas.length != 8) {
+    if (datas.length != 20 && datas.length != 8) {
       throw InvalidEncoding(
           "Data length is not valid. Expected 20 byte or 8 byte data got ${datas.length} bytes");
     }
-    int _port = datas[2] << 8 | datas[3] * 0xff;
-    List<int> _address = datas.sublist(3, datas.length);
+
+    int _port = datas[2] << 8 | datas[3] & 0xff;
+    List<int> _address = datas.sublist(4);
     return new MappedAddress(getFamily(datas[1]), _port, _address);
   }
 }
@@ -83,9 +84,10 @@ class MappedAddressFactory implements ByteSerializableFactory<MappedAddress> {
 
 class XAddress extends MappedAddress {
   final List<int> actualAddress;
+  final int actualPort;
 
-  XAddress(IPFamily family, int port, this.actualAddress)
-      : super(family, port, MAGIC_XOR(actualAddress));
+  XAddress(IPFamily family, this.actualPort, this.actualAddress)
+      : super(family, MAGIC_XOR_INT16(actualPort), MAGIC_XOR(actualAddress));
 
   factory XAddress.fromMappedAddress(MappedAddress mappedAddress,
       {IPFamily family, int port, List<int> address}) {
@@ -96,7 +98,8 @@ class XAddress extends MappedAddress {
   factory XAddress.fromBytes(List<int> datas) {
     var _mappedAddress = MappedAddress.fromBytes(datas);
     return XAddress.fromMappedAddress(_mappedAddress,
-        address: MAGIC_XOR(_mappedAddress.address));
+        address: MAGIC_XOR(_mappedAddress.address),
+        port: MAGIC_XOR_INT16(_mappedAddress.port));
   }
 }
 
