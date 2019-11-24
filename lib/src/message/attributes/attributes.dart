@@ -63,9 +63,6 @@ class Attributes extends ListBase<Attribute<ByteSerializable>>
     while (bytes.length - index >= 4) {
       var attrib = Attribute.fromBytes(bytes.sublist(index));
       attributes.add(attrib);
-      XAddress xaddr = attrib.attribute;
-      var port = xaddr.actualPort;
-      var addr = xaddr.actualAddress;
       index += attrib.length;
     }
   }

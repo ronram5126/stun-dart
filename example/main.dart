@@ -1,10 +1,8 @@
-import 'dart:io';
-
 import "package:stun_dart/stun.dart";
 
 void main() async {
-  await initializeStun((Datagram data) {
-    print(data.data);
+  await initializeStun((String selfAddress) {
+    print(selfAddress);
   });
   await initRequest();
 }

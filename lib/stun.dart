@@ -1,15 +1,16 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:stun_dart/public_STUN.dart';
+import 'package:stun_dart/src/message/attributes/address.dart';
 import 'package:stun_dart/src/message/message.dart';
 import 'package:stun_dart/src/util/constant.dart';
 // import 'package:udp/udp.dart';
 
-typedef void DatagramCallback(Datagram data);
+typedef void StunCallback(String address);
 StreamSubscription _streamSubscription;
 RawDatagramSocket _socket;
 
-Future initializeStun([DatagramCallback callback]) async {
+Future initializeStun([StunCallback callback]) async {
   await RawDatagramSocket.bind(InternetAddress.anyIPv4, 5126)
       .then((sock) => _socket = sock);
   _streamSubscription = _socket.listen((event) {
@@ -17,9 +18,19 @@ Future initializeStun([DatagramCallback callback]) async {
       if (callback != null) {
         Datagram recievedData = _socket.receive();
         var message = Message.fromBytes(recievedData.data);
-        var attributeLength = message.attributes.length;
-        print(attributeLength);
-        callback(recievedData);
+        var attributes = message.attributes;
+        if (attributes.length > 0) {
+          for (int c = 0; c < attributes.length; c++) {
+            var tlvAttribute = attributes[c];
+            if (tlvAttribute.type == ATTRIBUTE_XOR_MAPPED_ADDRESS) {
+              XAddress attribute = tlvAttribute.attribute;
+              var ipaddress = attribute.actualAddress;
+              var port = attribute.actualPort;
+              String selfAddress = ipaddress.join(".") + ":$port";
+              callback(selfAddress);
+            }
+          }
+        }
       }
     }
   });
