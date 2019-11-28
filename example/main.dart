@@ -4,5 +4,4 @@ void main() async {
   await initializeStun((String selfAddress) {
     print(selfAddress);
   });
-  await initRequest();
 }

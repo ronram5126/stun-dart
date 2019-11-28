@@ -1,3 +1,6 @@
+const int TIMEOUT_SECONDS = 50;
+const int RESPONSE_TIMEOUT_MINUTES = 5;
+
 const int RESERVED = 0x0000;
 
 const int MESSAGE_TYPE_FILTER = 0x3FFF;

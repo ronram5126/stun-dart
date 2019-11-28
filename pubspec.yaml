@@ -8,7 +8,6 @@ environment:
   sdk: ">=2.2.2"
 
 dependencies:
-  udp: ^2.0.0
   uuid: ^2.0.4
   dart_stringprep: ^0.1.0+4-dev
 
