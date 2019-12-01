@@ -1,6 +1,8 @@
 import 'dart:isolate';
+import 'package:stun_dart/src/util/models.dart';
 import 'package:stun_dart/stun.dart';
-import 'src/util/models.dart';
+
+const int _TIMEOUT = 10;
 
 Map<String, DateTime> lastUpdated = new Map<String, DateTime>();
 RespondedData currentAddress;
@@ -34,11 +36,23 @@ void handlePortCall(data) {
     }
 }
 
+getCurrentAddress(address) async {
+  var lastSet = lastUpdated["currentAddress"];
+  sendPort.send({"method": "getCurrentAddress"});
+  int timeout = _TIMEOUT;
+  while ((lastSet == null && lastUpdated is DateTime) ||
+      (lastUpdated["currentAddress"].difference(lastSet).inMilliseconds < 0)) {
+    await Future.delayed(Duration(seconds: 1));
 
-getCurrentAddress(address) {
-  
+    timeout--;
+
+    if (timeout < 0) {
+      throw Exception("Timeout");
+    }
+  }
+
+  return currentAddress;
 }
-
 
 void initRecievedPort() {
   if (receivePort != null) {
@@ -62,4 +76,19 @@ Future initSTUNIsolately() async {
   }, receivePort.sendPort);
 }
 
-Future stopSTUNIsolation() async {}
+Future stopSTUNIsolation() async {
+  var lastSet = lastUpdated["killed"];
+  sendPort.send({"method": "getCurrentAddress"});
+  var timeout = _TIMEOUT;
+
+  while ((lastSet == null && lastUpdated is DateTime) ||
+      (lastUpdated["currentAddress"].difference(lastSet).inMilliseconds < 0)) {
+    await Future.delayed(Duration(seconds: 1));
+
+    timeout--;
+
+    if (timeout < 0) {
+      throw Exception("Timeout");
+    }
+  }
+}

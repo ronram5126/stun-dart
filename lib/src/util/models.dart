@@ -22,14 +22,13 @@ class TimedMessage {
 class RespondedFromData extends RespondedData {
   final String from;
 
-  RespondedFromData(this.from, DateTime lastRecieved, String result): super(lastRecieved, result);
+  RespondedFromData(this.from, DateTime lastRecieved, String result)
+      : super(lastRecieved, result);
 }
-
 
 class RespondedData {
   final DateTime lastRecieved;
   final String result;
 
   RespondedData(this.lastRecieved, this.result);
-  
 }
