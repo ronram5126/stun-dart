@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:stun_dart/src/util/exceptions.dart';
-import 'package:stun_dart/src/util/ip.dart';
+import 'util/ip.dart';
 
 import '../TLV_encoding.dart';
 

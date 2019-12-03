@@ -1,6 +1,4 @@
-
-
-import 'package:stun_dart/src/util/ip.dart';
+import 'util/ip.dart';
 import 'package:stun_dart/src/util/magic_cookie.dart';
 
 import '../TLV_encoding.dart';
