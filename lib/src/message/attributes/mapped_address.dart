@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:stun_dart/src/util/exceptions.dart';
@@ -9,6 +10,15 @@ class MappedAddress implements ByteSerializable {
   final IPFamily family;
   final int port;
   final List<int> address;
+  InternetAddress getNetAddress() {
+    String addr;
+    if (address.length > 4) {
+      addr = address.map((f) => f.toRadixString(16)).join(":");
+    } else {
+      addr = address.join(".");
+    }
+    return InternetAddress(addr);
+  }
 
   MappedAddress(this.family, this.port, this.address);
 

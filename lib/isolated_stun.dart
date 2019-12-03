@@ -69,7 +69,7 @@ Future initSTUNIsolately() async {
     initRecievedPort();
     sendPort.send({"method": "register", "port": receivePort.sendPort});
 
-    initializeStun((data) {
+    initializeStun(callback: (data) {
       sendPort.send(
           {"method": "setCurrentAddress", "address": calculateResponse()});
     });

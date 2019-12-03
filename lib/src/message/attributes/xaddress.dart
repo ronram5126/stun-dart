@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'util/ip.dart';
 import 'package:stun_dart/src/util/magic_cookie.dart';
 
@@ -7,6 +9,17 @@ import 'mapped_address.dart';
 class XAddress extends MappedAddress {
   final List<int> actualAddress;
   final int actualPort;
+
+  @override
+  InternetAddress getNetAddress() {
+    String addr;
+    if (address.length > 4) {
+      addr = actualAddress.map((f) => f.toRadixString(16)).join(":");
+    } else {
+      addr = actualAddress.join(".");
+    }
+    return InternetAddress(addr);
+  }
 
   XAddress(IPFamily family, this.actualPort, this.actualAddress)
       : super(family, MAGIC_XOR_INT16(actualPort), MAGIC_XOR(actualAddress));
