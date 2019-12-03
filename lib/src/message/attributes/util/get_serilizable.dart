@@ -1,3 +1,4 @@
+import 'package:stun_dart/src/message/attributes/change_address.dart';
 import 'package:stun_dart/src/message/attributes/changed_address.dart';
 import 'package:stun_dart/src/message/attributes/username.dart';
 import 'package:stun_dart/src/message/attributes/xaddress.dart';
@@ -11,16 +12,18 @@ import '../mapped_address.dart';
 ByteSerilizerFactory getSerilizer(int attributeType) {
   switch (attributeType) {
     case ATTRIBUTE_MAPPED_ADDRESS:
-      return (data) => MappedAddress.fromBytes(data);
+      return (datas) => MappedAddress.fromBytes(datas);
+    case ATTRIBUTE_CHANGE_ADDRESS:
+      return (datas) => ChangeAddress.fromBytes(datas);
     case ATTRIBUTE_CHANGED_ADDRESS:
-      return (data) => ChangedAddress.fromBytes(data);
+      return (datas) => ChangedAddress.fromBytes(datas);
     case ATTRIBUTE_XOR_MAPPED_ADDRESS:
-      return (data) => XAddress.fromBytes(data);
+      return (datas) => XAddress.fromBytes(datas);
     case ATTRIBUTE_ERROR_CODE:
-      return (data) => ErrorCode.fromBytes(data);
+      return (datas) => ErrorCode.fromBytes(datas);
     case ATTRIBUTE_USERNAME:
-      return (data) => UserName.fromBytes(data);
+      return (datas) => UserName.fromBytes(datas);
     default:
-      return (data) => new DefaultAttribute(data);
+      return (datas) => new DefaultAttribute(datas);
   }
 }
