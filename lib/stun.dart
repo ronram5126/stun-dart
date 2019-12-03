@@ -3,7 +3,7 @@ import 'dart:core';
 import 'dart:io';
 import 'dart:isolate';
 import 'package:stun_dart/public_STUN.dart';
-import 'package:stun_dart/src/message/attributes/address.dart';
+import 'package:stun_dart/src/message/attributes/xaddress.dart';
 import 'package:stun_dart/src/message/message.dart';
 import 'package:stun_dart/src/util/constant.dart';
 import 'package:stun_dart/src/util/models.dart';

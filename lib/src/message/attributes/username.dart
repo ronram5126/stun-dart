@@ -23,10 +23,3 @@ class UserName implements ByteSerializable {
     return utf8.encode(nameprep(this.username));
   }
 }
-
-class MappedAddressFactory implements ByteSerializableFactory<UserName> {
-  @override
-  UserName generateSerilizableFromBytes(List<int> bytes) {
-    return UserName.fromBytes(bytes);
-  }
-}
