@@ -2,7 +2,7 @@ name: stun_dart
 version: 0.1.0+1-dev
 author: "Ronit Ramdam BK <ron.ram5126@gmail.com>"
 homepage: https://github.com/ronram5126/stun-dart
-description: Simple plug and play stun client for dart, with configurable predefined list of public stun.
+description: Simple plug and play stun client for dart. This will let you know your current public IP, port and NAT type details.
 
 environment:
   sdk: ">=2.2.2"

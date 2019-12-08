@@ -1,19 +1,23 @@
 # STUN Dart
-Simple plug and play stun client for dart, with configurable predefined list of public stun. It can be started in isolation with refresh interval to maintain the STUN infomation and raise onChanged event if something changes.
-A composable, Future-based library for making HTTP requests.
+Simple plug and play stun client for dart, with configurable predefined list of public stun.
 
-## Using
-
+## Usage
 This is a bare minimum stun client useful for further establishing peer-to-peer connection between two different clients.
 
-```dart
-```
 
-You can also isolate the process. It will automatically maintain the detail regarding how to establish peer to peer connection.
+## To Do
+- [] Simplifying
+- [] Optimizing
+- [] Cleaning
+- [] Documenting
+- [] Adding Support for User Defined STUN client
+- [] Making Code more Isolate friendly
+- [] Adding Support for Authentication
 
-```dart
-```
+---
 
-When unconfigured this package use different public stun server. It is recommended that you provide more than one stun server to account for any errors and downtime.
-```dart
-```
+## 9th Dec, 2019
+Sorry, but the development for this project is currently halted due to my lack of time. I will update it if anyone needs further help. 
+
+Cheers,
+Ronit R. BK ([ron.ram5126@gmail.com](mailto:ron.ram5126@gmail.com))
